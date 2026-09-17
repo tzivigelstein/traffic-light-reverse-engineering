@@ -18,8 +18,8 @@
     </svg>
     <div class="map-title"><b>Cruce</b></div>
     <div class="map-controls">
-      <button class="data-button" id="data-button" aria-label="Tus datos e importación">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 3v12"/><path d="M7 10l5 5 5-5"/><path d="M4 17v3h16v-3"/></svg>
+      <button class="data-button" id="data-button" aria-label="Tus datos: cargar la exportación de Salud">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 16V4"/><path d="M7 9l5-5 5 5"/><path d="M4 17v3h16v-3"/></svg><span>Tus datos</span>
       </button>
       <button id="zoom-in" aria-label="Acercar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></button>
       <button id="zoom-out" aria-label="Alejar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M5 12h14"/></svg></button>
@@ -41,11 +41,12 @@
   <label class="import">
     <input type="file" id="import-file" accept=".zip,application/zip">
     Cargar exportación de Salud
-    <small>El export.zip completo. Solo se agregan las caminatas nuevas.</small>
+    <small>El export.zip completo o workout-routes.zip. Se analizan todas las caminatas de nuevo.</small>
   </label>
-  <p class="small" id="import-result" style="margin-top:8px"></p>
+  <p class="small" id="import-result" style="margin-top:8px" aria-live="polite"></p>
   <div class="data-list" id="data-summary"></div>
-  <p class="small" style="margin-top:12px">Versión de diseño con tus datos hasta el <span id="data-date"></span>. Todavía no procesa archivos nuevos: eso llega cuando el análisis esté portado a la web. El mapa de fondo se carga de CARTO con datos de OpenStreetMap.</p>
+  <p class="small" id="data-note" style="margin-top:12px"></p>
+  <button class="link" id="clear-dataset" style="margin-top:8px" hidden>Borrar los datos de este dispositivo</button>
   <button class="close" id="close-data-sheet">Listo</button>
 </dialog>
 

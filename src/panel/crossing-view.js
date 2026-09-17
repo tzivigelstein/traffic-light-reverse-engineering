@@ -1,10 +1,11 @@
 import { t } from "../i18n/es.js";
 import { escapeHtml } from "../lib/dom.js";
+import { formatLongDate } from "../lib/format.js";
 import { crossingStatus, liveModel, missingWaits } from "../model/crossings.js";
 import { getCrossing, getRoute, isRepeatedRoute, walksThroughCrossing } from "../model/dataset.js";
 import { cycleClockBlock } from "./cycle-clock.js";
 import { backButton, routeShape, waitsProgress } from "./glyphs.js";
-import { cycleSeconds, routeName, statusLabel, timeBandsText, walkingDirection } from "./labels.js";
+import { crossingKindLabel, crossingName, cycleSeconds, routeName, statusLabel, timeBandsText, walkingDirection } from "./labels.js";
 
 function modelRow(model) {
   const bands = timeBandsText(model.includes);
@@ -33,11 +34,16 @@ export function crossingView(crossingId) {
   const status = crossingStatus(crossing), missing = missingWaits(crossing);
   const live = liveModel(crossing);
   const noPattern = `<p class="empty-note">${t.crossing.noPatternYet} ${missing ? t.crossing.noPatternMissing(missing) : t.crossing.noPatternNoCycle}</p>`;
+  const changed = crossing.models.find((m) => m.planChange);
+  const planChange = changed
+    ? `<p class="notice">${t.crossing.planChanged(formatLongDate(changed.planChange.date), Math.round(changed.planChange.before * 100), Math.round(changed.planChange.after * 100))}</p>`
+    : "";
   return `
     ${backButton()}
-    <div class="detail-header"><h1>${t.labels.crossing(crossingId)}</h1>
-      <p class="sub">${t.crossing.subtitle(walkingDirection(crossing.walkingDirection), crossing.kind)}</p>
+    <div class="detail-header"><h1>${escapeHtml(crossingName(crossing))}</h1>
+      <p class="sub">${t.crossing.subtitle(walkingDirection(crossing.walkingDirection), crossingKindLabel(crossing.kind))}</p>
       <span class="status-badge ${status}">${t.crossing.badge(statusLabel(status), status === "observing" ? missing : null)}</span></div>
+    ${planChange}
     ${live ? cycleClockBlock(crossing, live) : noPattern}
     <div class="section"><h3>${t.crossing.byDayAndTime}</h3><p class="small">${t.crossing.byDayAndTimeHint}</p>${crossing.models.map(modelRow).join("")}</div>
     <div class="section"><h3>${t.crossing.whoPasses}</h3>

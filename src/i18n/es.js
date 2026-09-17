@@ -23,6 +23,8 @@ export const enums = {
     south: "sur", southwest: "suroeste", west: "oeste", northwest: "noroeste",
   },
   status: { confirmed: "Confirmado", probable: "Probable", observing: "En observación" },
+  /** What the map says about a crossing. */
+  crossingKind: { signal: "con semáforo", "no-signal": "sin semáforo" },
   dayType: { weekday: "días hábiles", weekend: "fines de semana" },
   dayTypeTitle: { weekday: "Días hábiles", weekend: "Fines de semana" },
   certainty: { provisional: "provisional", confirmed: "confirmado" },
@@ -42,6 +44,7 @@ export const t = {
 
   labels: {
     crossing: (id) => `Cruce ${id}`,
+    crossingOnStreet: (street) => `Cruce de ${street}`,
     crossingAria: (id, status) => `Cruce ${id}, ${status.toLowerCase()}`,
     defaultRouteName: (heading, km) => `Hacia el ${heading}, ${km}`,
     /** "días hábiles de 7 a 10 h" */
@@ -61,6 +64,9 @@ export const t = {
   },
 
   list: {
+    emptyTitle: "Todavía no hay caminatas",
+    emptyHint: "Cargá la exportación de Salud de tu iPhone (Salud → tu perfil → Exportar todos los datos de salud). Se procesa acá, en tu dispositivo, y no sale de él.",
+    emptyAction: "Cargar exportación de Salud",
     tabRoutes: "Recorridos",
     tabCrossings: "Cruces",
     tabsAria: "Lista",
@@ -107,6 +113,12 @@ export const t = {
     noWaitsChip: "sin esperas",
     nameInputLabel: "Nombre del recorrido",
     nameInputHint: "Enter para guardar. Vacío vuelve al nombre automático.",
+    bestDepartures: "A qué hora conviene salir",
+    bestDeparturesHint: (dayType, from, to, average, best) =>
+      `${dayType}, saliendo entre ${from} y ${to}: al azar esperás unos ${average} s en total; en las mejores ventanas, ${best} s.`,
+    departureWindow: (from, to) => `${from} a ${to}`,
+    departureIdeal: (time) => `ideal ${time}`,
+    paceNote: "Simulado con tu variación de ritmo; una espera atrasa todo lo que sigue.",
   },
 
   charts: {
@@ -155,6 +167,8 @@ export const t = {
     repeatedRoute: "Recorrido que repetís",
     looseWalk: "Caminata suelta",
     looseWalkHint: "Suma datos igual",
+    planChanged: (date, before, after) =>
+      `Atención: el patrón dejó de cumplirse cerca del ${date} (${before} % de esperas alineadas antes, ${after} % después). Probablemente reprogramaron el semáforo.`,
   },
 
   clock: {
@@ -198,6 +212,27 @@ export const t = {
     detectedCrossings: "Cruces detectados",
     period: "Período",
     periodValue: (fromMonth, toMonth, year) => `${fromMonth} a ${toMonth} ${year}`,
-    filePicked: (name, mb) => `Elegiste ${name} (${mb} MB). Esta versión de diseño todavía no lo procesa.`,
+    filePicked: (name, mb) => `Procesando ${name} (${mb} MB)…`,
+    progress: {
+      reading: (pct) => `Leyendo el archivo… ${pct} %`,
+      "export-xml": "Leyendo export.xml para quedarme solo con las caminatas (puede tardar)…",
+      tracks: (found, done, discarded) =>
+        `${found} rutas de caminatas${discarded ? ` (se descartan ${discarded} de otros ejercicios)` : ""}. Procesando ${done ?? 0} de ${found}…`,
+      osm: "Bajando calles y semáforos de OpenStreetMap…",
+      "osm-failed": "No pude usar OpenStreetMap; sigo sin nombres de calles.",
+      crossings: "Detectando cruces…",
+      models: (done, total) => `Buscando ciclos: cruce ${done ?? 0} de ${total}…`,
+      coordination: "Buscando semáforos coordinados…",
+      report: "Armando el informe…",
+      recommendations: "Calculando las mejores horas de salida…",
+      export: "Guardando…",
+    },
+    done: (walks, crossings) => `Listo: ${walks} caminatas y ${crossings} cruces. Recargando…`,
+    errors: {
+      "no-gpx": "No encontré archivos .gpx en ese zip.",
+      "no-tracks": "No quedó ninguna caminata con suficientes puntos.",
+      generic: (message) => `No pude procesar el archivo (${message}).`,
+    },
+    dataNote: (date) => `Datos procesados en este dispositivo, con caminatas hasta el ${date}.`,
   },
 };

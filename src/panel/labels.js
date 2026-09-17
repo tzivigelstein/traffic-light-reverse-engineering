@@ -12,6 +12,12 @@ export const walkingDirection = (direction) => direction.split("-").map((h) => e
 
 export const statusLabel = (status) => enums.status[status];
 
+/** "Cruce de Av. Rivadavia" when the map named the street, otherwise "Cruce 3". */
+export const crossingName = (crossing) =>
+  crossing.street ? t.labels.crossingOnStreet(crossing.street) : t.labels.crossing(crossing.id);
+
+export const crossingKindLabel = (kind) => (kind ? enums.crossingKind[kind] ?? kind : null);
+
 /** "días hábiles de 7 a 10 h y fines de semana de 10 a 20 h" */
 export function timeBandsText(includes) {
   return t.labels.joinBands(includes.map(([dayType, band]) => {

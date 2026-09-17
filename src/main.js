@@ -1,13 +1,16 @@
 import "./styles/index.css";
+import { $ } from "./lib/dom.js";
 import { initDataSheet } from "./data-sheet.js";
 import { startLiveClock } from "./live-clock.js";
 import { drawMarkers, fitSelection, initMap, styleTraces } from "./map/map.js";
+import { hasData } from "./model/dataset.js";
 import { goBack, onChange, state } from "./model/state.js";
 import { initCycleClock } from "./panel/cycle-clock.js";
 import { renderPanel } from "./panel/panel.js";
 import { isRenaming } from "./panel/rename.js";
 
 initMap();
+$("map").classList.toggle("no-data", !hasData);
 initCycleClock();
 const dataSheet = initDataSheet();
 

@@ -3,7 +3,7 @@ import { escapeHtml } from "../lib/dom.js";
 import { formatHm, formatKm, formatLongDate, formatMinutes } from "../lib/format.js";
 import { dataset, getCrossing, getRoute, getWalk, isRepeatedRoute } from "../model/dataset.js";
 import { backButton, crossingGlyph } from "./glyphs.js";
-import { routeName } from "./labels.js";
+import { crossingName, routeName } from "./labels.js";
 
 /** Stops farther than this from any known crossing count as "other stops". */
 const CROSSING_RADIUS_M = 30;
@@ -21,7 +21,7 @@ export function walkView(walkId) {
       ? `<span class="chip gap">${t.walk.waitedChip(Math.round(pass.wait))}</span>`
       : `<span class="chip neutral">${t.walk.noWaitChip}</span>`;
     return `<button class="item" data-crossing="${pass.crossingId}">${crossingGlyph(getCrossing(pass.crossingId))}
-      <span class="text"><span class="name">${t.labels.crossing(pass.crossingId)}</span><span class="small">${t.walk.passedAt(pass.time, pass.inferred)}</span></span>
+      <span class="text"><span class="name">${escapeHtml(crossingName(getCrossing(pass.crossingId)))}</span><span class="small">${t.walk.passedAt(pass.time, pass.inferred)}</span></span>
       <span>${chip}</span></button>`;
   }).join("");
 

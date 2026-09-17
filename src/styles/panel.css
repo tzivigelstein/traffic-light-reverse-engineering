@@ -7,6 +7,9 @@
 .chips button { border: 1px solid var(--line); background: var(--surface); border-radius: 999px; padding: 5px 12px; font-size: 14px; font-weight: 600; color: var(--ink-2); cursor: pointer; }
 .chips button[aria-pressed="true"] { background: var(--ink); border-color: var(--ink); color: var(--base); }
 .top-summary { margin-top: 14px; }
+.empty-state { margin-top: 24px; padding: 20px; border-radius: 18px; background: var(--surface); }
+.empty-state h2 { margin-bottom: 6px; }
+.primary { margin-top: 14px; width: 100%; padding: 12px; border-radius: 12px; border: 0; background: var(--ink); color: var(--base); font-weight: 700; cursor: pointer; }
 .top-summary b { font-family: var(--cond); font-size: 30px; font-weight: 700; line-height: 1; }
 
 /* ---------- sections and list items ---------- */
@@ -63,3 +66,8 @@
 .hour-bars .bar { width: 70%; background: var(--line); border-radius: 3px; }
 .hour-bars .bar.filled { background: var(--ink); }
 .hour-bars span { font-size: 11px; color: var(--ink-3); }
+
+/* ---------- recommended departure windows ---------- */
+.windows { margin-top: 8px; }
+.windows div { padding: 7px 0; border-top: 1px solid var(--line); font-family: var(--cond); font-size: 19px; font-weight: 600; }
+.windows div .small { font-family: var(--sans); font-weight: 500; }

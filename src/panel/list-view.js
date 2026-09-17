@@ -3,7 +3,7 @@ import { escapeHtml } from "../lib/dom.js";
 import { formatDecimal, formatHm, formatKmNumber, formatLongDate, formatMinutes } from "../lib/format.js";
 import { median, percentile, sum } from "../lib/stats.js";
 import { bestModel, crossingStatus, liveModel, missingWaits, statusRank } from "../model/crossings.js";
-import { dataset, walksThroughCrossing } from "../model/dataset.js";
+import { dataset, hasData, walksThroughCrossing } from "../model/dataset.js";
 import { looseWalks, repeatedRoutes, visibleWalks } from "../model/routes.js";
 import { state } from "../model/state.js";
 import { crossingGlyph, routeShape, waitsProgress } from "./glyphs.js";
@@ -57,6 +57,10 @@ function crossingsTab() {
 }
 
 export function listView() {
+  if (!hasData) {
+    return `<div class="empty-state"><h2>${t.list.emptyTitle}</h2><p class="small">${t.list.emptyHint}</p>
+      <button class="primary" data-open-data-sheet>${t.list.emptyAction}</button></div>`;
+  }
   const walks = visibleWalks();
   const totalKm = sum(walks.map((w) => w.km));
   return `

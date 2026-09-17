@@ -1,5 +1,6 @@
 /**
- * Dataset schema (src/data/dataset.json), produced by the offline analysis.
+ * Dataset schema: produced by src/analysis in the browser from a Health export and kept in
+ * localStorage; the app starts empty until the user imports one.
  * Coordinates are metres east/north of `origin`, which is also the usual departure point.
  *
  * @typedef {Object} Dataset
@@ -15,6 +16,17 @@
  * @property {Heading} heading             Overall compass direction
  * @property {number} km
  * @property {number|null} returnRouteId   The same route walked the other way, if detected
+ * @property {Recommendation[]} [recommendations]  Best departure windows, one per day type (frequent routes only)
+ *
+ * @typedef {Object} Recommendation
+ * @property {DayType} dayType
+ * @property {number} walks                Walks in this group
+ * @property {number} from                 Earliest departure of the group, seconds of day
+ * @property {number} to
+ * @property {{id: number, delta: number, status: string}[]} crossings  Crossings along the way, seconds after departure
+ * @property {[number, number][]|null} windows   Departure windows (seconds of day) with the least waiting, widest first
+ * @property {number|null} averageWait     Expected total wait leaving at random, seconds
+ * @property {number|null} bestWait        Expected total wait inside the best windows
  *
  * @typedef {"north"|"northeast"|"east"|"southeast"|"south"|"southwest"|"west"|"northwest"} Heading
  *
@@ -25,7 +37,8 @@
  * @property {number} axis                 Street axis in degrees, counter-clockwise from east
  * @property {string} walkingDirection     e.g. "northeast-southwest"
  * @property {number} passes
- * @property {string|null} kind            Map-derived crossing type, when available
+ * @property {"signal"|"no-signal"|null} kind  What the map says about the corner (null without map data)
+ * @property {string|null} street          Name of the street you cross, when the map knows it
  * @property {CrossingModel[]} models      One per time band that had enough passes
  *
  * @typedef {Object} CrossingModel
@@ -41,6 +54,14 @@
  * @property {number} [phase]              Seconds after midnight when a green starts
  * @property {number} [greenMax]           Latest observed green, seconds into the cycle
  * @property {CycleFit} [provisional]      Best fit so far while still observing
+ * @property {"signal"|"platoons"|"periodic"} [category]  Fixed-time light, platoons released upstream, or unknown without map
+ * @property {number} [green]              Conservative green length, seconds
+ * @property {number} [q]                  Probability of not waiting for the green when arriving on red
+ * @property {number} [aligned]            Fraction of waits released within ±4 s of the phase
+ * @property {number|null} [duration]      Estimated red/platoon duration, seconds
+ * @property {number} [delayPerPass]       Mean seconds lost per pass
+ * @property {number} [cars]               Cars per platoon, order of magnitude (platoons only)
+ * @property {{date: string, before: number, after: number, daysAgo: number}} [planChange]  The pattern stopped holding around `date`
  *
  * @typedef {"weekday"|"weekend"} DayType
  * @typedef {"observing"|"probable"|"confirmed"} Status

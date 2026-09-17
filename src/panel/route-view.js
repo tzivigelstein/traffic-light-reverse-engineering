@@ -1,6 +1,6 @@
 import { t } from "../i18n/es.js";
 import { escapeHtml } from "../lib/dom.js";
-import { formatHm, formatKm, formatLongDate, formatMinutes } from "../lib/format.js";
+import { formatHm, formatKm, formatLongDate, formatMinutes, formatTime } from "../lib/format.js";
 import { median, percentile, sum } from "../lib/stats.js";
 import { crossingStatus } from "../model/crossings.js";
 import { getRoute, totalWait } from "../model/dataset.js";
@@ -9,6 +9,7 @@ import { state } from "../model/state.js";
 import { departuresChart, durationsChart } from "./charts.js";
 import { backButton, crossingGlyph } from "./glyphs.js";
 import { routeName, statusLabel } from "./labels.js";
+import { enums } from "../i18n/es.js";
 
 /** One row per walk of a route, newest first. */
 export function walkRow(walk) {
@@ -20,6 +21,21 @@ export function walkRow(walk) {
   return `<button class="item" data-walk="${walk.id}">
     <span class="text"><span class="name">${formatLongDate(walk.date)}</span><span class="small">${meta}</span></span>
     <span>${chip}</span></button>`;
+}
+
+/** Best departure windows computed by the analysis for each day type of this route. */
+function recommendationsBlock(route) {
+  const groups = (route.recommendations ?? []).filter((r) => r.windows?.length);
+  if (!groups.length) return "";
+  return groups.map((r) => {
+    const windows = [...r.windows.slice(0, 8)].sort((a, b) => a[0] - b[0]);
+    const rows = windows.map(([from, to]) =>
+      `<div>${t.route.departureWindow(formatTime(from), formatTime(to))}<span class="small"> · ${t.route.departureIdeal(formatTime((from + to) / 2))}</span></div>`).join("");
+    return `<div class="card"><h3>${t.route.bestDepartures}</h3>
+      <p class="small">${t.route.bestDeparturesHint(enums.dayTypeTitle[r.dayType], formatHm(r.from), formatHm(r.to), Math.round(r.averageWait), Math.round(r.bestWait))}</p>
+      <div class="windows">${rows}</div>
+      <p class="small" style="margin-top:6px">${t.route.paceNote}</p></div>`;
+  }).join("");
 }
 
 export function routeView(routeId) {
@@ -57,6 +73,7 @@ export function routeView(routeId) {
       ${crossingRows || `<p class="empty-note">${t.route.noCrossings}</p>`}
       ${withPattern.length ? "" : `<p class="empty-note">${t.route.noConfirmedYet}</p>`}
     </div>
+    ${recommendationsBlock(route)}
     <div class="section"><h3>${t.route.allTimes}</h3>
       ${newestFirst.map(walkRow).join("")}
     </div>`;

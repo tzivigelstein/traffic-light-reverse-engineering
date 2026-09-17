@@ -7,6 +7,7 @@ import { crossingStatus, cyclePhases, liveModel } from "../model/crossings.js";
 import { dataset, getWalk } from "../model/dataset.js";
 import { relevantCrossingIds } from "../model/selection.js";
 import { isSelected, navigate, state } from "../model/state.js";
+import { crossingName } from "../panel/labels.js";
 import { onViewChange, size, toScreen, view } from "./viewport.js";
 
 /** Crossing markers, stops and the home marker, drawn in screen space on every view change. */
@@ -93,7 +94,7 @@ export function drawMarkers() {
     group.addEventListener("click", (ev) => { ev.stopPropagation(); open(); });
     group.addEventListener("keydown", (ev) => { if (ev.key === "Enter" || ev.key === " ") { ev.preventDefault(); open(); } });
     if (!live && (view.scale > LABEL_MIN_SCALE || selected)) {
-      svgEl("text", { x: 12, y: -10, class: "map-label" }, group).textContent = t.labels.crossing(crossing.id);
+      svgEl("text", { x: 12, y: -10, class: "map-label" }, group).textContent = crossingName(crossing);
     }
   }
 }

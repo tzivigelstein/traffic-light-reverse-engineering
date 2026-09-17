@@ -26,6 +26,7 @@ function bindEvents() {
   each("[data-crossing]", (d) => navigate({ type: "crossing", id: +d.crossing }));
   each("[data-back]", goBack);
   each("[data-rename]", (d) => startRename(+d.rename));
+  each("[data-open-data-sheet]", () => $("data-button").click());
 }
 
 export function renderPanel() {

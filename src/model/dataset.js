@@ -1,7 +1,22 @@
-import raw from "../data/dataset.json";
+import { STORAGE_KEYS } from "../config.js";
+import { load, save } from "../lib/storage.js";
+
+const stored = load(STORAGE_KEYS.dataset, null);
+
+/** The dataset produced on this device from the user's Health export, or an empty one until then. */
+export const hasData = Boolean(stored?.walks?.length);
 
 /** @type {import("./types.js").Dataset} */
-export const dataset = raw;
+export const dataset = hasData ? stored : { updatedAt: null, origin: null, routes: [], crossings: [], walks: [] };
+
+/** Persist a freshly analysed dataset; the app reloads to rebuild everything from it. */
+export function storeDataset(data) {
+  save(STORAGE_KEYS.dataset, data);
+}
+
+export function clearStoredDataset() {
+  try { localStorage.removeItem(STORAGE_KEYS.dataset); } catch { /* ignore */ }
+}
 
 export const getRoute = (id) => dataset.routes.find((r) => r.id === id);
 export const getCrossing = (id) => dataset.crossings.find((c) => c.id === id);

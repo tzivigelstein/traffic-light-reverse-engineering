@@ -1,0 +1,23 @@
+/* Design tokens: colors and type. Light is the default; dark swaps the palette. */
+:root {
+  --base: #E9ECEA; --surface: #F7F8F6; --map-bg: #F1F3F1; --ink: #1D2429; --ink-2: #55606A;
+  --ink-3: #8A949C; --line: #D3D8D6; --trace: #3346C9; --trace-outline: #FFFFFF; --green: #0E9F6E; --green-soft: #D5EFE4;
+  --red: #D83A2E; --red-soft: #F6DEDB; --amber: #C98A00; --amber-soft: #F3E7C6; --focus: #2563C9;
+  --sans: "Barlow", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --cond: "Barlow Condensed", "Arial Narrow", "Barlow", system-ui, sans-serif;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --base: #151A1E; --surface: #1E252A; --map-bg: #12171A; --ink: #E7ECEA; --ink-2: #A9B3BA;
+    --ink-3: #77828A; --line: #2E373D; --trace: #8FA0FF; --trace-outline: #0B0F12; --green: #2EC48D; --green-soft: #173A2F;
+    --red: #F0584C; --red-soft: #43231F; --amber: #E3A92A; --amber-soft: #3D321A; --focus: #7FA8F0;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --base: #151A1E; --surface: #1E252A; --map-bg: #12171A; --ink: #E7ECEA; --ink-2: #A9B3BA;
+  --ink-3: #77828A; --line: #2E373D; --trace: #8FA0FF; --trace-outline: #0B0F12; --green: #2EC48D; --green-soft: #173A2F;
+  --red: #F0584C; --red-soft: #43231F; --amber: #E3A92A; --amber-soft: #3D321A; --focus: #7FA8F0;
+  color-scheme: dark;
+}

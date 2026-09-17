@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="es-AR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Cruce: tus caminatas y sus semáforos</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+<div class="app">
+  <div class="map" id="map" aria-label="Mapa de tus caminatas">
+    <div class="tiles" id="tiles" hidden></div>
+    <svg id="map-svg" role="img" aria-label="Tus caminatas y los cruces detectados">
+      <g id="trace-layer"></g>
+      <g id="marker-layer"></g>
+    </svg>
+    <div class="map-title"><b>Cruce</b></div>
+    <div class="map-controls">
+      <button class="data-button" id="data-button" aria-label="Tus datos e importación">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 3v12"/><path d="M7 10l5 5 5-5"/><path d="M4 17v3h16v-3"/></svg>
+      </button>
+      <button id="zoom-in" aria-label="Acercar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></button>
+      <button id="zoom-out" aria-label="Alejar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M5 12h14"/></svg></button>
+      <button id="fit-selection" aria-label="Encuadrar la selección"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 9V4h5M15 4h5v5M20 15v5h-5M9 20H4v-5"/></svg></button>
+    </div>
+    <div class="scale-bar" id="scale-bar"><i></i><span></span></div>
+    <div class="attribution" id="attribution" hidden></div>
+    <div class="map-legend" aria-hidden="true">
+      <span><svg width="12" height="12"><circle cx="6" cy="6" r="4.5" fill="var(--ink)"/></svg>Confirmado</span>
+      <span><svg width="12" height="12"><circle cx="6" cy="6" r="4.5" fill="none" stroke="var(--ink)" stroke-width="1.6" stroke-dasharray="2 1.6"/></svg>En observación</span>
+    </div>
+  </div>
+  <section class="panel" id="panel" aria-live="polite"></section>
+</div>
+
+<dialog id="data-sheet" aria-labelledby="data-sheet-title">
+  <h2 id="data-sheet-title">Tus datos</h2>
+  <p class="sub">Todo se procesa en tu teléfono. Tus recorridos no salen de acá.</p>
+  <label class="import">
+    <input type="file" id="import-file" accept=".zip,application/zip">
+    Cargar exportación de Salud
+    <small>El export.zip completo. Solo se agregan las caminatas nuevas.</small>
+  </label>
+  <p class="small" id="import-result" style="margin-top:8px"></p>
+  <div class="data-list" id="data-summary"></div>
+  <p class="small" style="margin-top:12px">Versión de diseño con tus datos hasta el <span id="data-date"></span>. Todavía no procesa archivos nuevos: eso llega cuando el análisis esté portado a la web. El mapa de fondo se carga de CARTO con datos de OpenStreetMap.</p>
+  <button class="close" id="close-data-sheet">Listo</button>
+</dialog>
+
+<script type="module" src="/src/main.js"></script>
+</body>
+</html>

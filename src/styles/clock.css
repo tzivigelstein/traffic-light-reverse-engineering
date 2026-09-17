@@ -1,0 +1,31 @@
+/* ---------- live cycle clock ---------- */
+.cycle-clock { position: relative; width: min(100%, 300px); aspect-ratio: 1; margin: 8px auto 0; }
+.cycle-clock svg { width: 100%; height: 100%; }
+.cycle-clock .center { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; pointer-events: none; }
+.light-state { font-family: var(--cond); font-weight: 700; font-size: 52px; line-height: .95; }
+.light-state.green { color: var(--green); } .light-state.red { color: var(--red); } .light-state.uncertain { color: var(--amber); font-size: 40px; }
+.countdown { font-size: 16px; color: var(--ink-2); margin-top: 4px; }
+.countdown b { display: block; font-family: var(--cond); font-size: 28px; font-weight: 600; color: var(--ink); line-height: 1.1; }
+.upcoming { display: flex; gap: 8px; overflow-x: auto; padding: 4px 0; scrollbar-width: none; }
+.upcoming div { flex: none; padding: 6px 10px; border-radius: 10px; background: var(--surface); border: 1px solid var(--line); font-family: var(--cond); font-size: 19px; font-weight: 600; }
+.notice { background: var(--amber-soft); border-radius: 12px; padding: 10px 12px; font-size: 14px; margin-top: 10px; }
+
+/* ---------- red-arrival behaviour by month ---------- */
+.months .month { display: grid; grid-template-columns: 64px 1fr 48px; gap: 10px; align-items: center; padding: 5px 0; font-size: 14px; }
+.months .bars { display: flex; height: 14px; border-radius: 4px; overflow: hidden; background: var(--line); }
+.months .bars i { display: block; height: 100%; }
+.months .pct { text-align: right; font-weight: 600; }
+.cat-green { background: var(--green); } .cat-waited { background: var(--ink); } .cat-red { background: var(--red); } .cat-gap { background: var(--amber); }
+
+/* ---------- cycle duration bar ---------- */
+.cycle-bar { position: relative; height: 18px; border-radius: 9px; overflow: hidden; background: var(--line); margin-top: 14px; }
+.cycle-bar i { position: absolute; top: 0; bottom: 0; }
+.striped { background: repeating-linear-gradient(45deg, var(--amber) 0 3px, var(--amber-soft) 3px 6px); }
+.cycle-ticks { position: relative; height: 18px; font-size: 12px; color: var(--ink-2); margin-top: 3px; }
+.cycle-ticks span { position: absolute; transform: translateX(-50%); white-space: nowrap; }
+.cycle-ticks span:first-child { transform: none; }
+.cycle-ticks span:last-child { transform: none; }
+.facts { margin-top: 10px; }
+.facts div { display: grid; grid-template-columns: 9.5em 1fr; gap: 10px; padding: 8px 0; border-top: 1px solid var(--line); font-size: 14px; }
+.facts b { font-weight: 600; }
+.facts span { color: var(--ink-2); }

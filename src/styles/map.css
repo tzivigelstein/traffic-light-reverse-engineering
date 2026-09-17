@@ -1,0 +1,43 @@
+/* ---------- traces ---------- */
+.trace { fill: none; stroke: var(--trace); stroke-width: 2; stroke-opacity: .3; stroke-linejoin: round; stroke-linecap: round; vector-effect: non-scaling-stroke; }
+.trace.dimmed { stroke-opacity: .08; }
+.trace.highlighted { stroke-opacity: .6; stroke-width: 3; }
+.trace.solo { stroke-opacity: 1; stroke-width: 4; }
+.trace-outline { fill: none; stroke: var(--trace-outline); stroke-width: 8; stroke-opacity: .9; stroke-linejoin: round; stroke-linecap: round; vector-effect: non-scaling-stroke; }
+
+/* ---------- background tiles (only when the dataset carries a real origin) ---------- */
+.tiles { position: absolute; inset: 0; overflow: hidden; pointer-events: none;
+  filter: grayscale(.85) contrast(.8) brightness(1.06); opacity: .85; }
+.tiles img { position: absolute; max-width: none; user-select: none; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .tiles { filter: invert(1) hue-rotate(180deg) grayscale(.85) brightness(.8) contrast(.85); opacity: .75; } }
+:root[data-theme="dark"] .tiles { filter: invert(1) hue-rotate(180deg) grayscale(.85) brightness(.8) contrast(.85); opacity: .75; }
+.attribution { position: absolute; left: 12px; bottom: 36px; font-size: 10px; color: var(--ink-2);
+  background: color-mix(in srgb, var(--surface) 80%, transparent); padding: 0 5px; border-radius: 4px; }
+.attribution a { color: inherit; }
+
+/* ---------- markers ---------- */
+.crossing-marker { cursor: pointer; }
+.crossing-marker .hit-area { fill: transparent; }
+.crossing-marker .halo { fill: none; stroke: none; }
+.crossing-marker .dot { stroke: var(--ink); stroke-width: 2.5; }
+.crossing-marker.confirmed .dot { fill: var(--ink); }
+.crossing-marker.probable .dot { fill: var(--surface); stroke-width: 4; }
+.crossing-marker.observing .dot { fill: var(--surface); stroke-dasharray: 3 2.5; }
+.crossing-marker.selected .halo { stroke: var(--focus); stroke-width: 3; }
+.crossing-marker.faded { opacity: .35; }
+.stop { fill: var(--amber); stroke: var(--trace-outline); stroke-width: 2; }
+.home-marker { fill: var(--surface); stroke: var(--ink); stroke-width: 2.5; }
+.map-label { font: 600 12px var(--sans); fill: var(--ink); paint-order: stroke; stroke: var(--map-bg); stroke-width: 4px; }
+
+/* ---------- overlays ---------- */
+.map-controls { position: absolute; right: 12px; top: calc(12px + env(safe-area-inset-top)); display: flex; flex-direction: column; gap: 8px; }
+.map-controls button, .data-button { width: 40px; height: 40px; border-radius: 12px; border: 1px solid var(--line); background: var(--surface);
+  display: grid; place-items: center; cursor: pointer; box-shadow: 0 1px 2px rgba(0,0,0,.08); }
+.map-controls svg, .data-button svg { width: 20px; height: 20px; }
+.map-title { position: absolute; left: 14px; top: calc(12px + env(safe-area-inset-top)); display: flex; align-items: center; gap: 10px; }
+.map-title b { font-family: var(--cond); font-size: 26px; font-weight: 700; letter-spacing: -0.01em; }
+.scale-bar { position: absolute; left: 14px; bottom: 12px; font-size: 12px; color: var(--ink-2); }
+.scale-bar i { display: block; height: 5px; border: 2px solid var(--ink-2); border-top: 0; margin-bottom: 2px; }
+.map-legend { position: absolute; right: 12px; bottom: 10px; display: flex; gap: 10px; font-size: 12px; color: var(--ink-2);
+  background: color-mix(in srgb, var(--surface) 85%, transparent); padding: 4px 8px; border-radius: 8px; }
+.map-legend span { display: inline-flex; align-items: center; gap: 4px; }
